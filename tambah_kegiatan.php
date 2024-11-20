@@ -2,7 +2,6 @@
 require_once 'config.php';
 require_once 'functions.php';
 
-// Cek apakah pengguna sudah login
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -19,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jumlah_relawan = $_POST['jumlah_relawan'];
     $dokumentasi = $_FILES['dokumentasi'];
 
-    // panggil fungsi untuk menambahkan kegiatan
     if (tambah_kegiatan($user_id, $nama_kegiatan, $tanggal_kegiatan, $lokasi_kegiatan, $deskripsi, $durasi_kegiatan, $jumlah_relawan, $dokumentasi)) {
         header('Location: home.php');
         exit();

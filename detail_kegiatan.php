@@ -2,7 +2,6 @@
 require_once 'config.php';
 require_once 'functions.php';
 
-// Cek apakah pengguna sudah login
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -19,7 +18,6 @@ if (isset($_GET['kegiatan_id'])) {
         echo "kegiatan tidak ditemukan";
     }
 
-    // Cek apakah kegiatan ada dan user memiliki akses
     if (!$kegiatan || $kegiatan['user_id'] != $user_id) {
         header('Location: home.php');
         exit();
@@ -29,13 +27,11 @@ if (isset($_GET['kegiatan_id'])) {
     exit();
 }
 
-// Cek apakah id kegiatan ada
 if (!$kegiatan_id) {
     echo "<p style='color:red;'>Kegiatan tidak ditemukan.</p>";
     exit();
 }
 
-// Cek apakah kegiatan ditemukan
 if (!$kegiatan) {
     echo "<p style='color:red;'>Kegiatan tidak ditemukan.</p>";
     exit();
@@ -87,4 +83,4 @@ if (!$kegiatan) {
     </div>
 </body>
 
-</html>i
+</html>

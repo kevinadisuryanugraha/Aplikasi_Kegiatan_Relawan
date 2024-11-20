@@ -1,6 +1,5 @@
 <?php
 // 1. Koneksi ke database mysql
-
 $hostname = "localhost";
 $username = "root";
 $password = "";

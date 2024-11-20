@@ -1,7 +1,6 @@
 <?php
 require_once "functions.php";
 
-// Cek apakah user sudah login
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.php');
@@ -9,9 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-
-// Ambil semua kegiatan
 $kegiatan_list = ambil_semua_kegiatan();
+
 ?>
 
 <!DOCTYPE html>

@@ -12,21 +12,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $nomor_telepon = $_POST['nomor_telepon'];
 
-    // cek apakah user dengan email ini sudah ada
     $check_user = ambil_user_by_email($email);
 
     if ($check_user) {
-        // Jika user sudah terdaftar, set session dan alihkan ke halaman utama
         $_SESSION['user_id'] = $check_user['user_id'];
         header("Location: home.php");
         exit();
     } else {
-        // jika user belum terdaftar, tambahkan pengguna baru
         $user_id = tambah_user($username, $email, $nomor_telepon);
 
-        // cek apakah penambahan pengguna berhasil
         if ($user_id) {
-            // simpan user_id di session
             $_SESSION['user_id'] = $user_id;
             header("Location: home.php");
             exit();

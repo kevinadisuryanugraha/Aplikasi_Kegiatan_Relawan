@@ -2,7 +2,6 @@
 require_once 'config.php';
 require_once 'functions.php';
 
-// Cek apakah pengguna sudah login
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
