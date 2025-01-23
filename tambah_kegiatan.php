@@ -19,10 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dokumentasi = $_FILES['dokumentasi'];
 
     if (tambah_kegiatan($user_id, $nama_kegiatan, $tanggal_kegiatan, $lokasi_kegiatan, $deskripsi, $durasi_kegiatan, $jumlah_relawan, $dokumentasi)) {
-        header('Location: home.php');
+        header("Location: home.php?status=success&message=Kegiatan berhasil Ditambahkan");
         exit();
     } else {
-        echo "<p style='color:red;'>Terjadi kesalahan saat menambahkan kegiatan.</p>";
+        header("Location: tambah_kegiatan.php?status=error&message=Kegiatan gagal diperbarui");
     }
 }
 ?>
@@ -40,6 +40,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2>Tambah Kegiatan Relawan</h2>
+
+        <?php
+        if (isset($_GET['status']) && isset($_GET['message'])) {
+            $status = $_GET['status'];
+            $message = $_GET['message'];
+
+            if ($status === 'success') {
+                echo "<script>alert('Berhasil: $message');</script>";
+            } else {
+                echo "<script>alert('Gagal: $message');</script>";
+            }
+        }
+        ?>
+
         <form action="tambah_kegiatan.php" method="POST" enctype="multipart/form-data">
             <label for="nama_kegiatan">Nama Kegiatan</label>
             <input type="text" id="nama_kegiatan" name="nama_kegiatan" required autofocus>

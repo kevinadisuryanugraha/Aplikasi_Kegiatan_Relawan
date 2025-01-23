@@ -29,6 +29,20 @@ $kegiatan_list = ambil_semua_kegiatan();
             <p>Setiap langkah kecil yang Anda ambil sebagai sukarelawan adalah senyum baru bagi mereka yang membutuhkan. Ambil bagian dalam kegiatan sosial kami dan rasakan kebersamaan, kepedulian, dan kebahagiaan yang tak ternilai harganya.</p>
             <p>Mari Menjadi Bagian Dari Mereka</p>
         </div>
+
+        <?php
+        if (isset($_GET['status']) && isset($_GET['message'])) {
+            $status = $_GET['status'];
+            $message = $_GET['message'];
+
+            if ($status === 'success') {
+                echo "<script>alert('Berhasil: $message');</script>";
+            } else {
+                echo "<script>alert('Gagal: $message');</script>";
+            }
+        }
+        ?>
+
         <a href="tambah_kegiatan.php" class="btn">Tambah Kegiatan Baru</a>
         <a href="logout.php" class="btn btn-logout">Logout</a>
 

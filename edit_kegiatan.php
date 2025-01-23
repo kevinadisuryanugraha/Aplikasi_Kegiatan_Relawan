@@ -10,7 +10,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Cek apakah ada kegiatan yang ingin diedit
 if (isset($_GET['kegiatan_id'])) {
     $kegiatan_id = $_GET['kegiatan_id'];
     // Ambil data kegiatan berdasarkan ID
@@ -26,7 +25,6 @@ if (isset($_GET['kegiatan_id'])) {
     exit();
 }
 
-// Proses update kegiatan
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama_kegiatan = $_POST['nama_kegiatan'];
     $tanggal_kegiatan = $_POST['tanggal_kegiatan'];
@@ -36,12 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jumlah_relawan = $_POST['jumlah_relawan'];
     $dokumentasi = $_FILES['dokumentasi'];
 
-    // Update kegiatan
     if (update_kegiatan($kegiatan_id, $nama_kegiatan, $tanggal_kegiatan, $lokasi_kegiatan, $deskripsi, $durasi_kegiatan, $jumlah_relawan, $dokumentasi)) {
-        header('Location: home.php');
-        exit();
+        header("Location: home.php?status=success&message=Kegiatan berhasil diperbarui");
     } else {
-        echo "<p style='color:red;'>Terjadi kesalahan saat mengupdate kegiatan.</p>";
+        header("Location: edit_kegiatan.php?status=error&message=Gagal berhasil diperbarui");
     }
 }
 ?>
@@ -59,6 +55,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2>Edit Kegiatan</h2>
+
+        <?php
+        if (isset($_GET['status']) && isset($_GET['message'])) {
+            $status = $_GET['status'];
+            $message = $_GET['message'];
+
+            if ($status === 'success') {
+                echo "<script>alert('Berhasil: $message');</script>";
+            } else {
+                echo "<script>alert('Gagal: $message');</script>";
+            }
+        }
+        ?>
+
         <form action="edit_kegiatan.php?kegiatan_id=<?php echo $kegiatan_id; ?>" method="POST" enctype="multipart/form-data">
             <label for="nama_kegiatan">Nama Kegiatan</label>
             <input type="text" id="nama_kegiatan" name="nama_kegiatan" value="<?php echo htmlspecialchars($kegiatan['nama_kegiatan']); ?>" required autofocus>

@@ -68,7 +68,7 @@ function update_kegiatan($kegiatan_id, $nama_kegiatan, $tanggal_kegiatan, $lokas
 {
     global $db;
 
-    if (is_array($dokumentasi)) {
+    if (is_array($dokumentasi) && isset($dokumentasi['tmp_name']) && !empty($dokumentasi['tmp_name'])) {
         $target_dir = "uploads/kegiatan/";
         $nama_file = basename($dokumentasi["name"]);
         $target_file = $target_dir . $nama_file;
@@ -96,6 +96,19 @@ function update_kegiatan($kegiatan_id, $nama_kegiatan, $tanggal_kegiatan, $lokas
         }
 
         $dokumentasi = $nama_file;
+    } else {
+        // Tidak ada file yang diunggah, gunakan foto lama
+        $query_foto = "SELECT dokumentasi FROM kegiatan WHERE kegiatan_id = ?";
+        $stmt_foto = $db->prepare($query_foto);
+        $stmt_foto->bind_param("i", $kegiatan_id);
+        $stmt_foto->execute();
+        $result_foto = $stmt_foto->get_result();
+        if ($row = $result_foto->fetch_assoc()) {
+            $dokumentasi = $row['dokumentasi'];
+        } else {
+            echo "Data kegiatan tidak ditemukan.";
+            return false;
+        }
     }
 
     $query = "UPDATE kegiatan SET nama_kegiatan = ?, tanggal_kegiatan = ?, lokasi_kegiatan = ?, deskripsi = ?, durasi_kegiatan = ?, jumlah_relawan = ?";

@@ -17,11 +17,6 @@ if (isset($_GET['kegiatan_id'])) {
     if ($kegiatan === false) {
         echo "kegiatan tidak ditemukan";
     }
-
-    if (!$kegiatan || $kegiatan['user_id'] != $user_id) {
-        header('Location: home.php');
-        exit();
-    }
 } else {
     header('Location: home.php');
     exit();
@@ -68,7 +63,7 @@ if (!$kegiatan) {
                 <p><?php echo htmlspecialchars($kegiatan['durasi_kegiatan']); ?> jam</p>
 
                 <label>Jumlah Relawan:</label>
-                <p><?php echo htmlspecialchars($kegiatan['jumlah_relawan']); ?></p>
+                <p><?php echo htmlspecialchars($kegiatan['jumlah_relawan']); ?> </p>
             </div>
 
             <div>
